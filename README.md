@@ -1,5 +1,7 @@
 # fresh project
 
+[DEMO](https://nus3-fresh-labs.deno.dev/)
+
 ### Usage
 
 Start the project:
