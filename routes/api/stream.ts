@@ -7,12 +7,12 @@ const sleep = (ms: number) => {
 const pseudoRenderToReadableStream = () => {
   const stream = new ReadableStream({
     async pull(controller) {
-      const firstMessage = new TextEncoder().encode("First render");
+      const firstMessage = new TextEncoder().encode("Loading feed...");
       controller.enqueue(firstMessage);
 
       await sleep(2000);
 
-      const resolvedMessage = new TextEncoder().encode("Resolve render");
+      const resolvedMessage = new TextEncoder().encode("PostFeed Content");
       controller.enqueue(resolvedMessage);
 
       controller.close();
