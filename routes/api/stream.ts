@@ -1,21 +1,28 @@
 import { HandlerContext } from "$fresh/server.ts";
 
-export const handler = (_req: Request, _ctx: HandlerContext): Response => {
-  const msg = new TextEncoder().encode("hello nus3");
+const sleep = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
-  let timerId: number | undefined;
-  const body = new ReadableStream({
-    start(controller) {
-      timerId = setInterval(() => {
-        controller.enqueue(msg);
-      }, 1000);
-    },
-    cancel() {
-      if (typeof timerId === "number") {
-        clearInterval(timerId);
-      }
+const pseudoRenderToReadableStream = () => {
+  const stream = new ReadableStream({
+    async pull(controller) {
+      const firstMessage = new TextEncoder().encode("First render");
+      controller.enqueue(firstMessage);
+
+      await sleep(2000);
+
+      const resolvedMessage = new TextEncoder().encode("Resolve render");
+      controller.enqueue(resolvedMessage);
+
+      controller.close();
     },
   });
 
-  return new Response(body);
+  return stream;
+};
+
+export const handler = (_req: Request, _ctx: HandlerContext): Response => {
+  const stream = pseudoRenderToReadableStream();
+  return new Response(stream);
 };
