@@ -1,21 +1,18 @@
 import { Head, asset } from "$fresh/runtime.ts";
+import StreamPlayground from "../islands/StreamPlayground.tsx";
 
-export default function Home() {
+export default function Streams() {
   return (
     <>
       <Head>
-        <title>Fresh Labs</title>
+        <title>Streams API | Fresh Labs</title>
         <link rel="stylesheet" href={asset("/style.css")} />
       </Head>
       <header>
-        <h1>Fresh Labs</h1>
+        <h1>Streams API</h1>
       </header>
       <main>
-        <ul>
-          <li>
-            <a href="./streams-api">Streams API</a>
-          </li>
-        </ul>
+        <StreamPlayground />
       </main>
     </>
   );
